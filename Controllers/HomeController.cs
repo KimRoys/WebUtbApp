@@ -15,6 +15,24 @@ namespace WebUtbApp.Controllers
             return View();
         }
 
+        //GET: HomeController/About
+        public IActionResult About()
+        {
+            return View();
+        }
+
+        //GET: HomeController/Contact
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
+        //GET: HomeController/Projects
+        public IActionResult Projects()
+        {
+            return View();
+        }
+
         // GET: HomeController/Details/5
         public ActionResult Details(int id)
         {
