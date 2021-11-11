@@ -1,0 +1,30 @@
+﻿@model WebUtbApp.Models.DoctorModel
+
+@{
+    ViewData["Title"] = "Fever";
+}
+
+<h1>Fever</h1>
+
+
+
+<hr />
+<div >
+    <p>@ViewBag.Message</p>
+    <form asp-action="Fever">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+
+            <label asp-for="Temp" class="control-label"></label>
+            <input asp-for="Temp" class="form-control" />
+            <input type="submit" value="Testa" class="btn btn-primary" />
+            <span asp-validation-for="Temp" class="text-danger"></span>
+        </div>
+
+        <input type="radio" name="celsius" id="celsius" checked>Celsius<br />
+        <input type="radio" name="fahrenheit" id="fahrenheit">Fahrenheit<br />
+    </form>
+</div>
+
+
+
