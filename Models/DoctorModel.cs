@@ -12,7 +12,7 @@ namespace WebUtbApp.Models
         public static float Hypothermia = 36;
         public bool IsCelsius { get; set; }
 
-        public string Fevercheck(float temp)
+        public static string Fevercheck(float temp)
         {
             string message;
 
