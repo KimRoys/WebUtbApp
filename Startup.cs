@@ -16,6 +16,15 @@ namespace WebUtbApp
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromHours(1);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             services.AddMvc();
         }
 
@@ -31,6 +40,8 @@ namespace WebUtbApp
 
             app.UseRouting();
 
+            app.UseSession();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -41,6 +52,12 @@ namespace WebUtbApp
                     name: "Doctor",
                     pattern: "FeverCheck",
                     defaults: new { controller = "Doctor", action = "Fever" });
+
+                endpoints.MapControllerRoute(
+                    name: "guessingGame",
+                    pattern: "/GuessingGame",
+                    defaults: new { controller = "GuessingGame", action = "GuessingGame" }
+                );
             });
         }
     }

@@ -25,6 +25,8 @@ namespace WebUtbApp.Controllers
            
             DoctorModel dm = new DoctorModel();
             dm.Temp = temp;
+            //dm.IsCelsius = isCelsius;
+            //dm.IsFahrenheit = isFahrenheit;
             ViewBag.Message = DoctorModel.Fevercheck(temp);
             return View();
         }
