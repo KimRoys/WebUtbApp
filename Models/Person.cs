@@ -6,7 +6,7 @@ namespace WebUtbApp.Models
 {
     public class Person
     {
-        private static int currentPId = 0;
+        private readonly int _personId;
 
         [DisplayName("Person ID")]
         public int PersonId { get; private set; }
@@ -61,7 +61,7 @@ namespace WebUtbApp.Models
             Name = name;
             Phone = phone;
             City = city;
-            PersonId = ++currentPId;
+            PersonId = ++_personId;
         }
                 
         public Person(int id, string name, string phone, string city)

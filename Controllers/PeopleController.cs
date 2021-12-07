@@ -4,24 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebUtbApp.Models;
+using WebUtbApp.Models.Data;
 
 namespace WebUtbApp.Controllers
 {
     public class PeopleController : Controller
     {
-        private static readonly PeopleViewModel peopleVM = new PeopleViewModel();
-        private static bool isPopulated = false;
-
+        
 
         public IActionResult PeopleIndex()
 
         {
-            if (!isPopulated)
+            PeopleViewModel peopleVM = new PeopleViewModel
             {
-                _ = peopleVM.PopulatePeople();
-                isPopulated = true;
-            }
-
+                ListOfPeople = PeopleListData.PopulatePeople()
+            };
             return View(peopleVM);
         }
             
@@ -30,7 +27,8 @@ namespace WebUtbApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreatePerson(CreatePersonViewModel CreatePersonVM)
         {
-            ViewBag.errorsInModel = null;
+         PeopleViewModel peopleVM = new PeopleViewModel();
+         ViewBag.errorsInModel = null;
 
             if (ModelState.IsValid)
             {
@@ -44,7 +42,7 @@ namespace WebUtbApp.Controllers
        
         public IActionResult DeletePerson(int personId)
         {
-
+            PeopleViewModel peopleVM = new PeopleViewModel();
             int personInd = peopleVM.ListOfPeople.FindIndex(person => person.PersonId == personId);
                 if (personInd >= 0)
                 {
@@ -56,6 +54,7 @@ namespace WebUtbApp.Controllers
         [HttpPost]
         public IActionResult SearchPersons(string filterString)
         {
+            PeopleViewModel peopleVM = new PeopleViewModel();
             if (string.IsNullOrWhiteSpace(filterString))
             {
                 peopleVM.FilterString = null;

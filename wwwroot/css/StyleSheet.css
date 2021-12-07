@@ -52,6 +52,26 @@
     justify-content: space-between;
 }
 
+table {
+    display: flex;
+    justify-content: space-between;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: smaller;
+    color: black;
+}
+
+tr {
+    display: flex; 
+    justify-content: space-between;
+}
+
+th, td {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+}
+
 li {
     padding-top: 1em;
 }

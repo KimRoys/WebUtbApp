@@ -8,24 +8,50 @@ namespace WebUtbApp.Models.Data
     public class PeopleListData
     {
 
-        public List<Person> ListOfPeople { get; } = new List<Person>();
-        public bool PopulatePeople()
+        private static List<Person> _listOfPeople = new List<Person>();
+        private static int _personId;
+        public static List<Person> PopulatePeople() 
         {
-            if (ListOfPeople.Count == 0)
+            if (_listOfPeople.Count == 0)
             {
-                ListOfPeople.Add(new Person("Kalle Anka", "54690835", "Ankeborg"));
-                ListOfPeople.Add(new Person("Kalle Kula", "57567783", "Långtbortistan"));
-                ListOfPeople.Add(new Person("Von Anka", "12457784", "Ankeborg"));
-                ListOfPeople.Add(new Person("Janne Långben", "890763421", "Hundberga"));
-                ListOfPeople.Add(new Person("Farmor Anka", "124545676", "Mittlandet"));
-                ListOfPeople.Add(new Person("Musse Pigg", "65724899", "Disneyland"));
-                ListOfPeople.Add(new Person("Alexander Anka", "44477747", "Turstan"));
-                ListOfPeople.Add(new Person("Kajsa Anka", "286846562", "Ankeborg"));
-                ListOfPeople.Add(new Person("Björnligan", "232324354", "Skogsdungen"));
-                return true;
+                _listOfPeople.Add(new Person("Kalle Anka", "54690835", "Ankeborg"));
+                _listOfPeople.Add(new Person("Kalle Kula", "57567783", "Långtbortistan"));
+                _listOfPeople.Add(new Person("Von Anka", "12457784", "Ankeborg"));
+                _listOfPeople.Add(new Person("Janne Långben", "890763421", "Hundberga"));
+                _listOfPeople.Add(new Person("Farmor Anka", "124545676", "Mittlandet"));
+                _listOfPeople.Add(new Person("Musse Pigg", "65724899", "Disneyland"));
+                _listOfPeople.Add(new Person("Alexander Anka", "44477747", "Turstan"));
+                _listOfPeople.Add(new Person("Kajsa Anka", "286846562", "Ankeborg"));
+                _listOfPeople.Add(new Person("Björnligan", "232324354", "Skogsdungen"));
+                return _listOfPeople;
 
             }
-            return false;
+            return _listOfPeople;
+        }
+
+        public Person Create(string name, string phone, string city)
+        {
+            Person newPerson = new Person(_personId, name, phone, city);
+            _listOfPeople.Add(newPerson);
+            _personId++;
+            return newPerson;
+        }
+
+        public bool Delete(Person person)
+        {
+            bool status = _listOfPeople.Remove(person);
+            return status;
+        }
+
+        public List<Person> Read()
+        {
+            return _listOfPeople;
+        }
+
+        public Person Read(int personId)
+        {
+            Person filterperson = _listOfPeople.Find(p => p.PersonId == personId);
+            return filterperson;
         }
     }
 }

@@ -7,15 +7,19 @@ using System.ComponentModel;
 
 namespace WebUtbApp.Models
 {
-    public class PeopleViewModel
+    public class PeopleViewModel : CreatePersonViewModel
 	{
-        public CreatePersonViewModel CreatePersonvm { get; set; } = new CreatePersonViewModel();
+        public List<Person> ListOfPeople { get; set; }
+        
 
         [DisplayName("Filter: ")]
-        public string FilterString { get; set; } = null;
+        public string FilterString { get; set; }
+
 
         public PeopleViewModel()
-        { }
+        {
+            ListOfPeople = new List<Person>();
+        }
 
         
     }
