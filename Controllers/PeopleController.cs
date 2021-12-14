@@ -10,58 +10,75 @@ namespace WebUtbApp.Controllers
 {
     public class PeopleController : Controller
     {
-        
-
+        private static PeopleViewModel peopleVM = new PeopleViewModel();
+        private static PeopleListData ListData = new PeopleListData();
         public IActionResult PeopleIndex()
 
         {
-            PeopleViewModel peopleVM = new PeopleViewModel
+            
+            if (peopleVM.ListOfPeople.Count == 0)
             {
-                ListOfPeople = PeopleListData.PopulatePeople()
-            };
+                peopleVM.ListOfPeople = PeopleListData.PopulatePeople();
+            }
+            
             return View(peopleVM);
         }
             
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreatePerson(CreatePersonViewModel CreatePersonVM)
+        public IActionResult CreatePerson(CreatePersonViewModel createPersonVM)
         {
-         PeopleViewModel peopleVM = new PeopleViewModel();
          ViewBag.errorsInModel = null;
 
             if (ModelState.IsValid)
             {
-                peopleVM.ListOfPeople.Add(new Person(CreatePersonVM.Name, CreatePersonVM.Phone, CreatePersonVM.City));
-                ModelState.Clear();
-            }
+                ListData.Create(createPersonVM.PersonId, createPersonVM.Name, createPersonVM.Phone, createPersonVM.City);
 
+                peopleVM.ListOfPeople.Add(new Person(createPersonVM.PersonId, createPersonVM.Name, createPersonVM.Phone, createPersonVM.City));
+                                
+                ModelState.Clear();
+
+                return View("PeopleIndex", peopleVM);
+            }
+            else
+            {
+                ViewBag.errorsInModel = "Failed to add a new person!" + ModelState.Values;
+            }
             return View("PeopleIndex", peopleVM);
         }
 
        
-        public IActionResult DeletePerson(int personId)
+        public IActionResult DeletePerson(int pId)
         {
-            PeopleViewModel peopleVM = new PeopleViewModel();
-            int personInd = peopleVM.ListOfPeople.FindIndex(person => person.PersonId == personId);
-                if (personInd >= 0)
-                {
-                    peopleVM.ListOfPeople.RemoveAt(personInd);
-                }
-                return View("PeopleIndex", peopleVM);            
+            
+            ListData.Read().FindIndex(person => person.PersonId == pId);
+            ListData.Delete(pId);
+
+            return View("PeopleIndex", peopleVM);
+
         }
+       
 
         [HttpPost]
-        public IActionResult SearchPersons(string filterString)
+        public IActionResult PeopleIndex(string filterString)
         {
-            PeopleViewModel peopleVM = new PeopleViewModel();
-            if (string.IsNullOrWhiteSpace(filterString))
+            peopleVM.ListOfPeople.Clear();
+            if (!String.IsNullOrWhiteSpace(filterString))
             {
-                peopleVM.FilterString = null;
-            }
-            else
-            {
-                peopleVM.FilterString = filterString;
+                bool isNumber = int.TryParse(filterString, out int pId);
+                foreach (Person p in ListData.Read())
+                {
+
+                    if (p.PersonId == pId                        
+                        || p.City.Contains(filterString, StringComparison.CurrentCultureIgnoreCase)
+                        || p.Name.Contains(filterString, StringComparison.CurrentCultureIgnoreCase)
+                        || p.Phone.Contains(filterString, StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        peopleVM.ListOfPeople.Add(p);
+                    }
+
+                }
             }
 
             return View("PeopleIndex", peopleVM);

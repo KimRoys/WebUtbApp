@@ -9,6 +9,7 @@ namespace WebUtbApp.Models
 {
     public class CreatePersonViewModel
     {
+        public int PersonId { get; set; }
         [DataType(DataType.Text)]
         [DisplayName("Name: ")]
         [Required(ErrorMessage = "Enter a name: ")]

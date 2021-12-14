@@ -61,12 +61,11 @@ namespace WebUtbApp.Models
             Name = name;
             Phone = phone;
             City = city;
-            PersonId = ++_personId;
         }
                 
         public Person(int id, string name, string phone, string city)
         {
-            this.PersonId = id;
+            PersonId = id;
             Name = name;
             Phone = phone;
             City = city;
