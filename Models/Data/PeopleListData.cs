@@ -30,7 +30,8 @@ namespace WebUtbApp.Models.Data
 
         public Person Create(int pId, string name, string phone, string city)
         {
-            pId = _listOfPeople.Count();
+            Person personToAdd = _listOfPeople.FindLast(person => person.PersonId != pId);
+            pId = personToAdd.PersonId;
             pId = pId += 1;
             Person newPerson = new Person(pId, name, phone, city);
             _listOfPeople.Add(newPerson);
@@ -42,7 +43,7 @@ namespace WebUtbApp.Models.Data
         {
             
             Person personToDelete = _listOfPeople.Find(person => person.PersonId == pId);
-            _listOfPeople.RemoveAt(pId);
+            _listOfPeople.Remove(personToDelete);
             return personToDelete;
         }
 

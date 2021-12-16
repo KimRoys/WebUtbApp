@@ -34,9 +34,7 @@ namespace WebUtbApp.Controllers
             if (ModelState.IsValid)
             {
                 ListData.Create(createPersonVM.PersonId, createPersonVM.Name, createPersonVM.Phone, createPersonVM.City);
-
-                peopleVM.ListOfPeople.Add(new Person(createPersonVM.PersonId, createPersonVM.Name, createPersonVM.Phone, createPersonVM.City));
-                                
+               
                 ModelState.Clear();
 
                 return View("PeopleIndex", peopleVM);
@@ -49,11 +47,11 @@ namespace WebUtbApp.Controllers
         }
 
        
-        public IActionResult DeletePerson(int pId)
+        public IActionResult DeletePerson(int personId)
         {
             
-            ListData.Read().FindIndex(person => person.PersonId == pId);
-            ListData.Delete(pId);
+            ListData.Read().FindIndex(person => person.PersonId == personId);
+            ListData.Delete(personId);
 
             return View("PeopleIndex", peopleVM);
 

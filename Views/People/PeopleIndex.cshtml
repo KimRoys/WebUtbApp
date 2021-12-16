@@ -94,7 +94,7 @@
         <td>@Html.DisplayFor(m => item.Name)</td>
         <td>@Html.DisplayFor(m => item.Phone)</td>
         <td>@Html.DisplayFor(m => item.City)</td>
-        <td><a asp-controller="People" asp-action="DeletePerson" asp-route-personId="PersonId" class="btn btn-outline-danger btn-sm">Delete</a></td>
+        <td><a asp-controller="People" asp-action="DeletePerson" asp-route-personId=@item.PersonId class="btn btn-outline-danger btn-sm">Delete</a></td>
     </tr>
             }
 
