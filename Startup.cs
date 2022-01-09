@@ -37,6 +37,11 @@ namespace WebUtbApp
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}"
                 );
+
+                endpoints.MapControllerRoute(
+                    name: "test",
+                    pattern: "FeverCheck",
+                    defaults: new { Controller = "Doctor", action = "FeverCheck" });
             });
         }
     }
